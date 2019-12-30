@@ -1,3 +1,10 @@
+var n = 15,  // 棋盘线数
+    color = 'black', // 默认黑棋先下
+    gobangArr = [],  // 存储棋盘的数据
+    win = false,  // 棋子赢的数组
+    gobang = document.getElementById('gobang_main'),  // 棋盘
+    gobangStatus = document.getElementById('gobang_status'), // 下棋状态
+    gobangToolAgain = document.getElementById('gobang_tool_again');    // 再来一盘
 
 /**
  * @desc 	添加元素监听
@@ -65,19 +72,10 @@ function drawPiece(event) {
             }
             color = color == 'black' ? 'white' : 'black';  // 修改棋子颜色
             if (!win) {
-                logStatus(color); // 设置提醒文本
+                gobangStatus.innerHTML = color === 'black' ? '<p>轮到黑棋下</p>' : '<p>轮到白棋下</p>';
             }
         }	
     }
-}
-
-// 提醒文本
-function logStatus(info) {
-if (color=="black") {	
-    gobangStatus.innerHTML ='<p>轮到黑棋下</p>';
-} else {
-    gobangStatus.innerHTML ='<p>轮到白棋下</p>';
-}
 }
 
 /**
@@ -256,13 +254,6 @@ function resetGobang() {
     }
 }
 
-var n = 15,  // 棋盘格+1
-    color = 'black', // 默认黑棋先下
-    gobangArr = [],  // 存储棋盘的数据
-    win = false,  // 棋子赢的数组
-    gobang = document.getElementById('gobang_main'),  // 棋盘
-    gobangStatus = document.getElementById('gobang_status'), // 下棋状态
-    gobangToolAgain = document.getElementById('gobang_tool_again');    // 再来一盘
 resetGobang();
 drawGobang(n);
 // 添加棋盘格监听
