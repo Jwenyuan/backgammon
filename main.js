@@ -271,6 +271,7 @@ function handleBackClick() {
         let domId = 'block_' + lineX + '_' + lineY;
         let canBackDom = document.getElementById(domId);
         canBackDom.className = 'gobang_block';
+        gobangArr[lineX][lineY] = '';
         color = color == 'black' ? 'white' : 'black';  // 修改棋子颜色
     }
 
