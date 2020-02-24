@@ -4,7 +4,11 @@ var n = 15,  // 棋盘线数
     win = false,  // 棋子赢的数组
     gobang = document.getElementById('gobang_main'),  // 棋盘
     gobangStatus = document.getElementById('gobang_status'), // 下棋状态
-    gobangToolAgain = document.getElementById('gobang_tool_again');    // 再来一盘
+    gobangToolAgain = document.getElementById('gobang_tool_again'),    // 再来一盘
+    goBack = document.getElementById('back'),
+    canBack = false,
+    lineX, // 横坐标
+    lineY; // 纵坐标
 
 /**
  * @desc 	添加元素监听
@@ -88,6 +92,8 @@ function chessWin(i, j, color) {
     var row,
         col,
         count = 1;  // 连续同一个颜色棋子的个数
+    lineX = i;
+    lineY = j;
     // 垂直方向循环判断
     for (row = i - 1; row >= 0 && row > i - 5; row--) {
         // 向上查询有几个相同颜色棋子
@@ -183,6 +189,7 @@ function chessWin(i, j, color) {
     }
     // 全部情况均未赢 置为初始值
     count = 1;
+    canBack = true;
 }
 
 /**
@@ -200,6 +207,7 @@ function isWin(count, color) {
             alert('白棋赢了');
         }
         win = true;
+        canBack = false;
         if (element.removeEventListener){
             element.removeEventListener(type, handler, false);
         } else if (element.detachEvent){
@@ -209,6 +217,7 @@ function isWin(count, color) {
         }
     } else {
         win = false;
+        canBack = true;
     }
 }
 
@@ -253,6 +262,19 @@ function resetGobang() {
         }
     }
 }
+/**
+ * @desc    悔棋按钮被点击
+ */
+function handleBackClick() {
+    if (canBack) {
+        canBack = false;
+        let domId = 'block_' + lineX + '_' + lineY;
+        let canBackDom = document.getElementById(domId);
+        canBackDom.className = 'gobang_block';
+        color = color == 'black' ? 'white' : 'black';  // 修改棋子颜色
+    }
+
+}
 
 resetGobang();
 drawGobang(n);
@@ -260,3 +282,4 @@ drawGobang(n);
 addEvent(gobang, drawPiece);  // 点击棋盘，进行下棋
 // 新开一局监听
 addEvent(gobangToolAgain, resetGobang);
+addEvent(goBack, handleBackClick)
